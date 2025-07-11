@@ -3,8 +3,11 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Building, Users, Scale } from 'lucide-react';
+import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 export function LegalTextsInstitutions() {
+  const actions = useGlobalActions();
+
   const institutions = [
     {
       id: 1,
@@ -65,7 +68,8 @@ export function LegalTextsInstitutions() {
                   <span className="text-sm font-medium text-emerald-600">
                     {institution.textsCount} textes
                   </span>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" 
+                          onClick={() => actions.handlePDFView(`Textes de ${institution.name}`)}>
                     Voir les textes
                   </Button>
                 </div>

@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Plus, Upload, Wand2, Database, Scan } from 'lucide-react';
 import { OCRScanner } from '@/components/common/OCRScanner';
+import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 interface LegalTextsEnrichmentTabProps {
   onAddLegalText: () => void;
@@ -12,6 +13,7 @@ interface LegalTextsEnrichmentTabProps {
 
 export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted }: LegalTextsEnrichmentTabProps) {
   const [showOCRScanner, setShowOCRScanner] = useState(false);
+  const actions = useGlobalActions();
 
   const handleOCRExtracted = (text: string) => {
     console.log('Texte OCR extrait:', text);
@@ -31,7 +33,33 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted }: 
     );
   }
 
-  const actions = [
+  const handleImportCSVExcel = () => {
+    actions.handleImport(['.csv', '.xlsx', '.xls']);
+  };
+
+  const handleAutoFill = () => {
+    const event = new CustomEvent('open-modal', {
+      detail: {
+        type: 'ai-generation',
+        title: 'Auto-remplissage intelligent',
+        data: { feature: 'auto-fill', context: 'legal-texts' }
+      }
+    });
+    window.dispatchEvent(event);
+  };
+
+  const handleAutoExtraction = () => {
+    const event = new CustomEvent('open-modal', {
+      detail: {
+        type: 'extraction',
+        title: 'Extraction automatique',
+        data: { feature: 'auto-extraction', context: 'legal-texts' }
+      }
+    });
+    window.dispatchEvent(event);
+  };
+
+  const actionsConfig = [
     {
       icon: Plus,
       title: "Ajouter un texte juridique",
@@ -54,7 +82,7 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted }: 
       description: "Importer plusieurs textes depuis un fichier Excel/CSV",
       buttonText: "Import CSV/Excel",
       color: "blue",
-      onClick: () => console.log('Import CSV/Excel')
+      onClick: handleImportCSVExcel
     },
     {
       icon: Wand2,
@@ -62,7 +90,7 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted }: 
       description: "Remplissage automatique avec IA",
       buttonText: "Auto-remplissage",
       color: "purple",
-      onClick: () => console.log('Auto-remplissage')
+      onClick: handleAutoFill
     },
     {
       icon: Database,
@@ -70,14 +98,14 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted }: 
       description: "Importer et traiter automatiquement des textes juridiques",
       buttonText: "Extraction auto",
       color: "orange",
-      onClick: () => console.log('Extraction auto')
+      onClick: handleAutoExtraction
     }
   ];
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {actions.map((action, index) => (
+        {actionsConfig.map((action, index) => (
           <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer" onClick={action.onClick}>
             <CardHeader className="text-center">
               <action.icon className={`w-12 h-12 mx-auto text-${action.color}-600 mb-4`} />

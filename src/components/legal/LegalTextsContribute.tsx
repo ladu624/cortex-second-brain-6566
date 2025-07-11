@@ -3,15 +3,19 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Plus, Upload, Users, Heart } from 'lucide-react';
+import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 export function LegalTextsContribute() {
+  const actions = useGlobalActions();
+
   const contributeOptions = [
     {
       id: 1,
       title: "Ajouter un texte juridique",
       description: "Contribuez en ajoutant de nouveaux textes juridiques à la base de données",
       icon: Plus,
-      action: "Ajouter un texte",
+      action: () => actions.handleAddLegalText(),
+      buttonText: "Ajouter un texte",
       color: "emerald"
     },
     {
@@ -19,7 +23,8 @@ export function LegalTextsContribute() {
       title: "Importer des documents",
       description: "Importez des documents PDF ou Word pour enrichir la collection",
       icon: Upload,
-      action: "Importer",
+      action: () => actions.handleImport(['.pdf', '.doc', '.docx']),
+      buttonText: "Importer",
       color: "blue"
     },
     {
@@ -27,7 +32,11 @@ export function LegalTextsContribute() {
       title: "Rejoindre la communauté",
       description: "Participez aux discussions et partagez vos connaissances juridiques",
       icon: Users,
-      action: "Rejoindre",
+      action: () => {
+        const event = new CustomEvent('navigate-to-section', { detail: 'forum' });
+        window.dispatchEvent(event);
+      },
+      buttonText: "Rejoindre",
       color: "purple"
     },
     {
@@ -35,7 +44,17 @@ export function LegalTextsContribute() {
       title: "Faire un don",
       description: "Soutenez le développement et la maintenance de cette plateforme",
       icon: Heart,
-      action: "Faire un don",
+      action: () => {
+        const event = new CustomEvent('open-modal', {
+          detail: {
+            type: 'donation',
+            title: 'Faire un don',
+            data: { platform: 'dalil.dz' }
+          }
+        });
+        window.dispatchEvent(event);
+      },
+      buttonText: "Faire un don",
       color: "red"
     }
   ];
@@ -58,7 +77,7 @@ export function LegalTextsContribute() {
           const IconComponent = option.icon;
           const colorClasses = getColorClasses(option.color);
           return (
-            <Card key={option.id} className="hover:shadow-md transition-shadow">
+            <Card key={option.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={option.action}>
               <CardHeader className="pb-3">
                 <div className="flex flex-col items-center text-center">
                   <div className={`p-3 rounded-full ${colorClasses.bg} mb-3`}>
@@ -72,8 +91,12 @@ export function LegalTextsContribute() {
                   <p className="text-sm text-gray-600">{option.description}</p>
                   <Button 
                     className={`w-full ${colorClasses.button}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      option.action();
+                    }}
                   >
-                    {option.action}
+                    {option.buttonText}
                   </Button>
                 </div>
               </CardContent>

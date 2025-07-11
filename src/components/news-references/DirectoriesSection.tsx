@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { TabFormField } from '@/components/common/TabFormField';
-import { Building, Users, Scale, FileText, Gavel } from 'lucide-react';
+import { Building, Users, Scale, FileText, Gavel, GraduationCap } from 'lucide-react';
 import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 export function DirectoriesSection() {
@@ -23,10 +23,14 @@ export function DirectoriesSection() {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="institutions" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="institutions" className="gap-2">
             <Building className="w-4 h-4" />
             Institutions Juridiques
+          </TabsTrigger>
+          <TabsTrigger value="facultes" className="gap-2">
+            <GraduationCap className="w-4 h-4" />
+            Facultés de Droit
           </TabsTrigger>
           <TabsTrigger value="professionnels" className="gap-2">
             <Users className="w-4 h-4" />
@@ -68,15 +72,18 @@ export function DirectoriesSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="p-3 border rounded hover:bg-gray-50">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Ministère de la Justice')}>
                     <div className="font-medium text-sm">Ministère de la Justice</div>
                     <p className="text-xs text-gray-600">Administration centrale de la justice en Algérie</p>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Conseil d\'État')}>
                     <div className="font-medium text-sm">Conseil d'État</div>
                     <p className="text-xs text-gray-600">Juridiction administrative suprême</p>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Cour Suprême')}>
                     <div className="font-medium text-sm">Cour Suprême</div>
                     <p className="text-xs text-gray-600">Plus haute juridiction judiciaire</p>
                   </div>
@@ -91,21 +98,129 @@ export function DirectoriesSection() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded cursor-pointer hover:bg-gray-100"
+                       onClick={() => actions.handlePDFView('Conseil National des Droits de l\'Homme')}>
                     <div className="font-medium text-sm">Conseil National des Droits de l'Homme</div>
                     <p className="text-xs text-gray-600">Protection et promotion des droits humains</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded cursor-pointer hover:bg-gray-100"
+                       onClick={() => actions.handlePDFView('Ordre National des Avocats')}>
                     <div className="font-medium text-sm">Ordre National des Avocats</div>
                     <p className="text-xs text-gray-600">Organisation professionnelle des avocats</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded cursor-pointer hover:bg-gray-100"
+                       onClick={() => actions.handlePDFView('Chambre Nationale des Notaires')}>
                     <div className="font-medium text-sm">Chambre Nationale des Notaires</div>
                     <p className="text-xs text-gray-600">Profession notariale algérienne</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="facultes" className="mt-6 space-y-6">
+          {/* Boutons d'action connectés */}
+          <div className="flex gap-3 justify-center mb-6">
+            <Button className="gap-2" onClick={handleAdd}>
+              <GraduationCap className="w-4 h-4" />
+              Ajouter
+            </Button>
+            <Button variant="outline" className="gap-2" onClick={handleEnrich}>
+              <FileText className="w-4 h-4" />
+              Enrichir
+            </Button>
+          </div>
+
+          <TabFormField
+            placeholder="Rechercher une faculté de droit..."
+            onSearch={(query) => console.log('Recherche facultés:', query)}
+            showActions={true}
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-emerald-600" />
+                  Facultés de Droit - Universités Publiques
+                </CardTitle>
+                <p className="text-sm text-gray-600">Formations juridiques publiques en Algérie</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Faculté de Droit - Université d\'Alger 1')}>
+                    <div className="font-medium text-sm">Faculté de Droit - Université d'Alger 1</div>
+                    <p className="text-xs text-gray-600">Formation en droit public et privé</p>
+                  </div>
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Faculté de Droit - Université d\'Oran')}>
+                    <div className="font-medium text-sm">Faculté de Droit - Université d'Oran</div>
+                    <p className="text-xs text-gray-600">Spécialisation en droit des affaires</p>
+                  </div>
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Faculté de Droit - Université de Constantine')}>
+                    <div className="font-medium text-sm">Faculté de Droit - Université de Constantine</div>
+                    <p className="text-xs text-gray-600">Excellence en droit international</p>
+                  </div>
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Faculté de Droit - Université de Tizi Ouzou')}>
+                    <div className="font-medium text-sm">Faculté de Droit - Université de Tizi Ouzou</div>
+                    <p className="text-xs text-gray-600">Formation bilingue français-arabe</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold">Programmes d'Études</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="p-2 bg-blue-50 rounded cursor-pointer hover:bg-blue-100"
+                         onClick={() => actions.handlePDFView('Licence en Droit')}>
+                      <div className="text-sm font-medium text-blue-700">Licence en Droit</div>
+                      <div className="text-xs text-blue-600">Formation fondamentale sur 3 ans</div>
+                    </div>
+                    <div className="p-2 bg-green-50 rounded cursor-pointer hover:bg-green-100"
+                         onClick={() => actions.handlePDFView('Master en Droit des Affaires')}>
+                      <div className="text-sm font-medium text-green-700">Master en Droit des Affaires</div>
+                      <div className="text-xs text-green-600">Spécialisation en droit commercial</div>
+                    </div>
+                    <div className="p-2 bg-purple-50 rounded cursor-pointer hover:bg-purple-100"
+                         onClick={() => actions.handlePDFView('Doctorat en Sciences Juridiques')}>
+                      <div className="text-sm font-medium text-purple-700">Doctorat en Sciences Juridiques</div>
+                      <div className="text-xs text-purple-600">Recherche et enseignement supérieur</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold">Ressources Académiques</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Bibliothèques Juridiques')}>
+                      Bibliothèques Juridiques
+                    </Button>
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Revues Juridiques')}>
+                      Revues Juridiques
+                    </Button>
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Centres de Recherche')}>
+                      Centres de Recherche
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </TabsContent>
 
@@ -139,25 +254,29 @@ export function DirectoriesSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Avocats')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Avocats</span>
                       <span className="text-xs text-blue-600">2,450 inscrits</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Notaires')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Notaires</span>
                       <span className="text-xs text-green-600">180 offices</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Huissiers de Justice')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Huissiers de Justice</span>
                       <span className="text-xs text-orange-600">95 études</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Experts Judiciaires')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Experts Judiciaires</span>
                       <span className="text-xs text-purple-600">340 experts</span>
@@ -174,15 +293,18 @@ export function DirectoriesSection() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="p-2 bg-blue-50 rounded">
+                    <div className="p-2 bg-blue-50 rounded cursor-pointer hover:bg-blue-100"
+                         onClick={() => actions.handlePDFView('Droit des Affaires')}>
                       <div className="text-sm font-medium text-blue-700">Droit des Affaires</div>
                       <div className="text-xs text-blue-600">Avocats spécialisés en droit commercial</div>
                     </div>
-                    <div className="p-2 bg-red-50 rounded">
+                    <div className="p-2 bg-red-50 rounded cursor-pointer hover:bg-red-100"
+                         onClick={() => actions.handlePDFView('Droit Pénal')}>
                       <div className="text-sm font-medium text-red-700">Droit Pénal</div>
                       <div className="text-xs text-red-600">Défense pénale et criminelle</div>
                     </div>
-                    <div className="p-2 bg-green-50 rounded">
+                    <div className="p-2 bg-green-50 rounded cursor-pointer hover:bg-green-100"
+                         onClick={() => actions.handlePDFView('Droit de la Famille')}>
                       <div className="text-sm font-medium text-green-700">Droit de la Famille</div>
                       <div className="text-xs text-green-600">Divorce, succession, filiation</div>
                     </div>
@@ -196,13 +318,16 @@ export function DirectoriesSection() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handleFilter('wilaya')}>
                       Par wilaya
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handleFilter('commune')}>
                       Par commune
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handleFilter('location')}>
                       Proche de moi
                     </Button>
                   </div>
@@ -242,25 +367,29 @@ export function DirectoriesSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Cour Suprême')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Cour Suprême</span>
                       <span className="text-xs text-red-600">1 juridiction</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Cours d\'Appel')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Cours d'Appel</span>
                       <span className="text-xs text-orange-600">12 cours</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Tribunaux')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Tribunaux</span>
                       <span className="text-xs text-blue-600">187 tribunaux</span>
                     </div>
                   </div>
-                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 border rounded hover:bg-gray-50 cursor-pointer"
+                       onClick={() => actions.handlePDFView('Juridictions Spécialisées')}>
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-sm">Juridictions Spécialisées</span>
                       <span className="text-xs text-green-600">45 juridictions</span>
@@ -277,15 +406,18 @@ export function DirectoriesSection() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="p-2 bg-blue-50 rounded">
+                    <div className="p-2 bg-blue-50 rounded cursor-pointer hover:bg-blue-100"
+                         onClick={() => actions.handlePDFView('Tribunaux de Première Instance')}>
                       <div className="text-sm font-medium text-blue-700">Tribunaux de Première Instance</div>
                       <div className="text-xs text-blue-600">Compétence générale civile et pénale</div>
                     </div>
-                    <div className="p-2 bg-green-50 rounded">
+                    <div className="p-2 bg-green-50 rounded cursor-pointer hover:bg-green-100"
+                         onClick={() => actions.handlePDFView('Tribunaux Administratifs')}>
                       <div className="text-sm font-medium text-green-700">Tribunaux Administratifs</div>
                       <div className="text-xs text-green-600">Contentieux administratif</div>
                     </div>
-                    <div className="p-2 bg-orange-50 rounded">
+                    <div className="p-2 bg-orange-50 rounded cursor-pointer hover:bg-orange-100"
+                         onClick={() => actions.handlePDFView('Tribunaux Commerciaux')}>
                       <div className="text-sm font-medium text-orange-700">Tribunaux Commerciaux</div>
                       <div className="text-xs text-orange-600">Litiges commerciaux et économiques</div>
                     </div>
@@ -299,13 +431,16 @@ export function DirectoriesSection() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Horaires d\'ouverture')}>
                       Horaires d'ouverture
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Coordonnées')}>
                       Coordonnées
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start"
+                            onClick={() => actions.handlePDFView('Procédures et formalités')}>
                       Procédures et formalités
                     </Button>
                   </div>

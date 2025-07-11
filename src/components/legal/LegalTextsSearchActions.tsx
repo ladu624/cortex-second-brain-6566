@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Eye, Filter, SortAsc } from 'lucide-react';
+import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 interface LegalTextsSearchActionsProps {
   searchTerm: string;
@@ -17,14 +18,44 @@ export function LegalTextsSearchActions({
   onAddLegalText,
   onOpenApprovalQueue
 }: LegalTextsSearchActionsProps) {
+  const actions = useGlobalActions();
   
   const handleApprovalQueueClick = () => {
     console.log('File d\'approbation clicked - nouvelle version');
     if (onOpenApprovalQueue) {
       onOpenApprovalQueue();
     } else {
-      // Simulation d'ouverture d'une modal inspirée des procédures administratives
-      alert('File d\'approbation ouverte - Version corrigée (inspirée du catalogue des procédures)');
+      const event = new CustomEvent('open-modal', {
+        detail: {
+          type: 'approval-queue',
+          title: 'File d\'approbation - Textes juridiques',
+          data: { context: 'legal-texts' }
+        }
+      });
+      window.dispatchEvent(event);
+    }
+  };
+
+  const handleFilter = () => {
+    actions.handleFilter('legal-texts');
+  };
+
+  const handleSort = () => {
+    const event = new CustomEvent('open-modal', {
+      detail: {
+        type: 'sort',
+        title: 'Options de tri',
+        data: { context: 'legal-texts' }
+      }
+    });
+    window.dispatchEvent(event);
+  };
+
+  const handleAddClick = () => {
+    if (onAddLegalText) {
+      onAddLegalText();
+    } else {
+      actions.handleAddLegalText();
     }
   };
 
@@ -43,12 +74,12 @@ export function LegalTextsSearchActions({
       
       {/* Boutons d'action */}
       <div className="flex gap-2 flex-wrap">
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" onClick={handleFilter}>
           <Filter className="w-4 h-4 mr-2" />
           Filtrer
         </Button>
         
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" onClick={handleSort}>
           <SortAsc className="w-4 h-4 mr-2" />
           Trier
         </Button>
@@ -64,12 +95,10 @@ export function LegalTextsSearchActions({
           File d'approbation
         </Button>
         
-        {onAddLegalText && (
-          <Button size="sm" onClick={onAddLegalText}>
-            <Plus className="w-4 h-4 mr-2" />
-            Ajouter un texte
-          </Button>
-        )}
+        <Button size="sm" onClick={handleAddClick}>
+          <Plus className="w-4 h-4 mr-2" />
+          Ajouter un texte
+        </Button>
       </div>
     </div>
   );
