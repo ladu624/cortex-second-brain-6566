@@ -5,15 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BookOpen, FileText, Scale, Building, Users, Calendar, Download, Eye } from 'lucide-react';
+import { UnifiedAddButtonHandler } from '@/components/common/UnifiedAddButtonHandler';
 import { useGlobalActions } from '@/hooks/useGlobalActions';
 
 export function LibrarySection() {
   const actions = useGlobalActions();
-
-  const handleAdd = () => {
-    console.log('Opening add legal text form from library...');
-    actions.handleAddLegalText();
-  };
 
   const handleEnrich = () => {
     console.log('Opening enrichment with file import from library...');
@@ -70,21 +66,25 @@ export function LibrarySection() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Boutons d'action connectés */}
-      <div className="flex gap-3 justify-center mb-6">
-        <Button className="gap-2" onClick={handleAdd}>
-          <BookOpen className="w-4 h-4" />
-          Ajouter
-        </Button>
-        <Button variant="outline" className="gap-2" onClick={handleEnrich}>
-          <FileText className="w-4 h-4" />
-          Enrichir
-        </Button>
-      </div>
+    <UnifiedAddButtonHandler>
+      {({ openLegalTextForm }) => (
+        <div className="space-y-6">
+          {/* Boutons d'action connectés */}
+          <div className="flex gap-3 justify-center mb-6">
+            <Button className="gap-2" onClick={openLegalTextForm}>
+              <BookOpen className="w-4 h-4" />
+              Ajouter
+            </Button>
+            <Button variant="outline" className="gap-2" onClick={handleEnrich}>
+              <FileText className="w-4 h-4" />
+              Enrichir
+            </Button>
+          </div>
 
-      {/* Onglets de la bibliothèque avec boutons intégrés */}
-      <LibraryTabs />
-    </div>
+          {/* Onglets de la bibliothèque avec boutons intégrés */}
+          <LibraryTabs />
+        </div>
+      )}
+    </UnifiedAddButtonHandler>
   );
 }
