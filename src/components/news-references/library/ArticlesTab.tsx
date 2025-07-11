@@ -30,7 +30,7 @@ const articles = [
 export function ArticlesTab() {
   return (
     <div className="space-y-6">
-      <ActionButtons />
+      <ActionButtons resourceType="articles" />
       <div className="grid grid-cols-1 gap-4">
         {articles.map((article) => (
           <ResourceCard

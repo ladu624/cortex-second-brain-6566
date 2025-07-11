@@ -28,7 +28,7 @@ const journaux = [
 export function JournauxTab() {
   return (
     <div className="space-y-6">
-      <ActionButtons />
+      <ActionButtons resourceType="journaux" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {journaux.map((journal) => (
           <ResourceCard
