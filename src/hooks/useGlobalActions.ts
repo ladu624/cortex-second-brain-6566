@@ -277,6 +277,16 @@ export function useGlobalActions() {
     window.dispatchEvent(event);
   };
 
+  // Nouvelles fonctions pour les ressources de bibliothèque
+  const handleAddLibraryResource = (resourceType: 'ouvrage' | 'revue' | 'journal' | 'article' | 'video' | 'directory') => {
+    console.log('Ouverture formulaire ressource:', resourceType);
+    
+    const event = new CustomEvent('open-library-form', {
+      detail: { resourceType }
+    });
+    window.dispatchEvent(event);
+  };
+
   return {
     handlePDFView,
     handleShare,
@@ -295,6 +305,7 @@ export function useGlobalActions() {
     handleAddLegalText,
     handleAddProcedure,
     handleAddNews,
+    handleAddLibraryResource,
     isProcessing
   };
 }

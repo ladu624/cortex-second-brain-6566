@@ -2,6 +2,7 @@
 import React from 'react';
 import { useGlobalActions } from '@/hooks/useGlobalActions';
 import { UnifiedModalSystem } from '@/components/modals/UnifiedModalSystem';
+import { LibraryFormHandler } from './LibraryFormHandler';
 
 interface ActionHandlerProps {
   children: React.ReactNode;
@@ -53,6 +54,7 @@ export function ActionHandler({ children }: ActionHandlerProps) {
     <>
       {children}
       <UnifiedModalSystem />
+      <LibraryFormHandler />
     </>
   );
 }

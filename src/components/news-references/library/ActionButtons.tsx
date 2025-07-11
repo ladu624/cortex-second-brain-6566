@@ -4,12 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Plus, Upload } from 'lucide-react';
 import { useGlobalActions } from '@/hooks/useGlobalActions';
 
-export function ActionButtons() {
+interface ActionButtonsProps {
+  resourceType?: 'ouvrage' | 'revue' | 'journal' | 'article' | 'video' | 'directory';
+}
+
+export function ActionButtons({ resourceType = 'ouvrage' }: ActionButtonsProps) {
   const actions = useGlobalActions();
 
   const handleAddNew = () => {
-    console.log('Opening add legal text form from library action buttons...');
-    actions.handleAddLegalText();
+    console.log('Opening add library resource form:', resourceType);
+    actions.handleAddLibraryResource(resourceType);
   };
 
   const handleEnrichment = () => {

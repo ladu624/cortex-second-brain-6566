@@ -58,8 +58,7 @@ export const menuItems = [
     submenu: [
       { label: "Assistant IA Juridique", section: "ai-assistant" },
       { label: "IA Avancée", section: "ai-advanced" },
-      { label: "Recherche IA", section: "ai-search" },
-      { label: "Tests Complets IA", section: "ai-comprehensive-test" }
+      { label: "Recherche IA", section: "ai-search" }
     ]
   },
   {
