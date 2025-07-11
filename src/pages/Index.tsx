@@ -19,7 +19,7 @@ const VALID_SECTIONS = new Set([
   "security", "performance-scalability", "integrations-interoperability", "accessibility-settings", "offline-mode", "mobile-app",
   "about", "contact", "technical-support", "ai-search", "ai-advanced", "favorites",
   "data-extraction", "document-templates", "advanced-search", "saved-searches",
-  "ai-assistant", "ai-comprehensive-test", "admin"
+  "ai-assistant", "admin"
 ]);
 
 const Index = () => {

@@ -8,8 +8,8 @@ export function ActionButtons() {
   const actions = useGlobalActions();
 
   const handleAddNew = () => {
-    console.log('Opening add legal text form from library action buttons...');
-    actions.handleAddLegalText();
+    console.log('Opening add library item form from library action buttons...');
+    actions.handleAddLibraryItem();
   };
 
   const handleEnrichment = () => {

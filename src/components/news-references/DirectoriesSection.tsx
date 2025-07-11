@@ -11,8 +11,8 @@ export function DirectoriesSection() {
   const actions = useGlobalActions();
 
   const handleAdd = () => {
-    console.log('Opening add legal text form from directories...');
-    actions.handleAddLegalText();
+    console.log('Opening add directory entry form from directories...');
+    actions.handleAddLibraryItem();
   };
 
   const handleEnrich = () => {

@@ -11,8 +11,8 @@ export function LibrarySection() {
   const actions = useGlobalActions();
 
   const handleAdd = () => {
-    console.log('Opening add legal text form from library...');
-    actions.handleAddLegalText();
+    console.log('Opening add library item form from library...');
+    actions.handleAddLibraryItem();
   };
 
   const handleEnrich = () => {
