@@ -19,16 +19,143 @@ import {
   Calendar,
   Clock
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface UserManagementSectionProps {
   language?: string;
 }
 
 export function UserManagementSection({ language = "fr" }: UserManagementSectionProps) {
+  const { toast } = useToast();
   const [usersFilter, setUsersFilter] = useState("");
   const [rolesFilter, setRolesFilter] = useState("");
   const [permissionsFilter, setPermissionsFilter] = useState("");
   const [sessionsFilter, setSessionsFilter] = useState("");
+
+  // Handlers pour les actions utilisateurs
+  const handleAddUser = () => {
+    console.log('Opening new user modal');
+    // TODO: Ouvrir une modal de création d'utilisateur
+    toast({
+      title: "Nouveau utilisateur",
+      description: "Ouverture du formulaire d'ajout d'utilisateur",
+    });
+  };
+
+  const handleEditUser = (userEmail: string) => {
+    console.log('Editing user:', userEmail);
+    // TODO: Ouvrir une modal d'édition d'utilisateur
+    toast({
+      title: "Édition utilisateur",
+      description: `Édition de l'utilisateur ${userEmail}`,
+    });
+  };
+
+  const handleUserSettings = (userEmail: string) => {
+    console.log('Opening user settings for:', userEmail);
+    // TODO: Ouvrir les paramètres utilisateur
+    toast({
+      title: "Paramètres utilisateur",
+      description: `Paramètres pour ${userEmail}`,
+    });
+  };
+
+  // Handlers pour les rôles
+  const handleAddRole = () => {
+    console.log('Opening new role modal');
+    // TODO: Ouvrir une modal de création de rôle
+    toast({
+      title: "Nouveau rôle",
+      description: "Ouverture du formulaire d'ajout de rôle",
+    });
+  };
+
+  const handleEditRole = (roleName: string) => {
+    console.log('Editing role:', roleName);
+    // TODO: Ouvrir une modal d'édition de rôle
+    toast({
+      title: "Édition rôle",
+      description: `Édition du rôle ${roleName}`,
+    });
+  };
+
+  const handleRolePermissions = (roleName: string) => {
+    console.log('Managing permissions for role:', roleName);
+    // TODO: Ouvrir la gestion des permissions du rôle
+    toast({
+      title: "Permissions du rôle",
+      description: `Gestion des permissions pour ${roleName}`,
+    });
+  };
+
+  // Handlers pour les permissions
+  const handleAddPermission = () => {
+    console.log('Opening new permission modal');
+    // TODO: Ouvrir une modal de création de permission
+    toast({
+      title: "Nouvelle permission",
+      description: "Ouverture du formulaire d'ajout de permission",
+    });
+  };
+
+  const handleEditPermission = (permissionName: string) => {
+    console.log('Editing permission:', permissionName);
+    // TODO: Ouvrir une modal d'édition de permission
+    toast({
+      title: "Édition permission",
+      description: `Édition de la permission ${permissionName}`,
+    });
+  };
+
+  const handlePermissionUsers = (permissionName: string) => {
+    console.log('Managing users for permission:', permissionName);
+    // TODO: Ouvrir la gestion des utilisateurs pour cette permission
+    toast({
+      title: "Utilisateurs de la permission",
+      description: `Gestion des utilisateurs pour ${permissionName}`,
+    });
+  };
+
+  // Handlers pour les sessions
+  const handleSessionDetails = (sessionUser: string) => {
+    console.log('Viewing session details for:', sessionUser);
+    // TODO: Afficher les détails de la session
+    toast({
+      title: "Détails de session",
+      description: `Détails de la session pour ${sessionUser}`,
+    });
+  };
+
+  const handleCloseSession = (sessionUser: string) => {
+    console.log('Closing session for:', sessionUser);
+    // TODO: Fermer la session utilisateur
+    toast({
+      title: "Session fermée",
+      description: `Session fermée pour ${sessionUser}`,
+      variant: "destructive",
+    });
+  };
+
+  const handleCloseAllSessions = () => {
+    console.log('Closing all sessions');
+    // TODO: Fermer toutes les sessions
+    if (confirm("Êtes-vous sûr de vouloir fermer toutes les sessions ?")) {
+      toast({
+        title: "Toutes les sessions fermées",
+        description: "Toutes les sessions actives ont été fermées",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFilterByDate = () => {
+    console.log('Opening date filter');
+    // TODO: Ouvrir un filtre par date
+    toast({
+      title: "Filtre par date",
+      description: "Ouverture du filtre par date",
+    });
+  };
 
   const users = [
     { name: "Ahmed Benali", email: "ahmed.benali@justice.dz", role: "Administrateur", status: "Actif", lastLogin: "2025-01-02 14:30", department: "Justice" },
@@ -109,7 +236,7 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                 onChange={(e) => setUsersFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleAddUser}>
               <UserPlus className="w-4 h-4 mr-2" />
               Nouvel Utilisateur
             </Button>
@@ -144,10 +271,10 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                       <p className="text-xs text-gray-500">Dernière connexion</p>
                       <p className="text-sm font-medium">{user.lastLogin}</p>
                       <div className="flex gap-2 mt-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleEditUser(user.email)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleUserSettings(user.email)}>
                           <Settings className="w-4 h-4" />
                         </Button>
                       </div>
@@ -170,7 +297,7 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                 onChange={(e) => setRolesFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleAddRole}>
               <Plus className="w-4 h-4 mr-2" />
               Nouveau Rôle
             </Button>
@@ -196,10 +323,10 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditRole(role.name)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleRolePermissions(role.name)}>
                         <Key className="w-4 h-4" />
                       </Button>
                     </div>
@@ -221,7 +348,7 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                 onChange={(e) => setPermissionsFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleAddPermission}>
               <Plus className="w-4 h-4 mr-2" />
               Nouvelle Permission
             </Button>
@@ -242,10 +369,10 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                       <p className="text-xs text-gray-500">{permission.users} utilisateurs affectés</p>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditPermission(permission.name)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handlePermissionUsers(permission.name)}>
                         <Users className="w-4 h-4" />
                       </Button>
                     </div>
@@ -268,11 +395,11 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
               />
             </div>
             <div className="flex gap-2">
-              <Button variant="outline">
+              <Button variant="outline" onClick={handleFilterByDate}>
                 <Calendar className="w-4 h-4 mr-2" />
                 Filtrer par date
               </Button>
-              <Button variant="destructive">
+              <Button variant="destructive" onClick={handleCloseAllSessions}>
                 Fermer toutes les sessions
               </Button>
             </div>
@@ -305,10 +432,10 @@ export function UserManagementSection({ language = "fr" }: UserManagementSection
                         {session.status}
                       </Badge>
                       <div className="flex gap-2 mt-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleSessionDetails(session.user)}>
                           Détails
                         </Button>
-                        <Button variant="destructive" size="sm">
+                        <Button variant="destructive" size="sm" onClick={() => handleCloseSession(session.user)}>
                           Fermer
                         </Button>
                       </div>

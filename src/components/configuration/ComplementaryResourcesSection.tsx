@@ -16,16 +16,123 @@ import {
   Trash2,
   Settings
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ComplementaryResourcesSectionProps {
   language?: string;
 }
 
 export function ComplementaryResourcesSection({ language = "fr" }: ComplementaryResourcesSectionProps) {
+  const { toast } = useToast();
   const [sourcesFilter, setSourcesFilter] = useState("");
   const [databasesFilter, setDatabasesFilter] = useState("");
   const [templatesFilter, setTemplatesFilter] = useState("");
   const [modelsFilter, setModelsFilter] = useState("");
+
+  // Handlers pour les sources juridiques
+  const handleAddSource = () => {
+    console.log('Opening new source modal');
+    toast({
+      title: "Nouvelle source juridique",
+      description: "Ouverture du formulaire d'ajout de source",
+    });
+  };
+
+  const handleEditSource = (sourceName: string) => {
+    console.log('Editing source:', sourceName);
+    toast({
+      title: "Édition source",
+      description: `Édition de la source ${sourceName}`,
+    });
+  };
+
+  const handleOpenExternalSource = (sourceName: string, sourceUrl: string) => {
+    console.log('Opening external source:', sourceName, sourceUrl);
+    // TODO: Ouvrir la source externe dans un nouvel onglet
+    window.open(`https://${sourceUrl}`, '_blank');
+    toast({
+      title: "Source externe",
+      description: `Ouverture de ${sourceName}`,
+    });
+  };
+
+  // Handlers pour les bases de données
+  const handleConfigureDatabase = () => {
+    console.log('Opening database configuration modal');
+    toast({
+      title: "Configuration base de données",
+      description: "Ouverture du formulaire de configuration",
+    });
+  };
+
+  const handleDatabaseSettings = (dbName: string) => {
+    console.log('Opening database settings:', dbName);
+    toast({
+      title: "Paramètres base de données",
+      description: `Paramètres pour ${dbName}`,
+    });
+  };
+
+  const handleDatabaseAccess = (dbName: string) => {
+    console.log('Accessing database:', dbName);
+    toast({
+      title: "Accès base de données",
+      description: `Accès à la base ${dbName}`,
+    });
+  };
+
+  // Handlers pour les modèles de documents
+  const handleAddTemplate = () => {
+    console.log('Opening new template modal');
+    toast({
+      title: "Nouveau modèle",
+      description: "Ouverture du formulaire d'ajout de modèle",
+    });
+  };
+
+  const handleEditTemplate = (templateName: string) => {
+    console.log('Editing template:', templateName);
+    toast({
+      title: "Édition modèle",
+      description: `Édition du modèle ${templateName}`,
+    });
+  };
+
+  const handleDeleteTemplate = (templateName: string) => {
+    console.log('Deleting template:', templateName);
+    if (confirm(`Êtes-vous sûr de vouloir supprimer le modèle "${templateName}" ?`)) {
+      toast({
+        title: "Modèle supprimé",
+        description: `Le modèle ${templateName} a été supprimé`,
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Handlers pour les workflows
+  const handleCreateWorkflow = () => {
+    console.log('Opening new workflow modal');
+    toast({
+      title: "Nouveau workflow",
+      description: "Ouverture du créateur de workflow",
+    });
+  };
+
+  const handleEditWorkflow = (workflowName: string) => {
+    console.log('Editing workflow:', workflowName);
+    toast({
+      title: "Édition workflow",
+      description: `Édition du workflow ${workflowName}`,
+    });
+  };
+
+  const handleWorkflowSettings = (workflowName: string) => {
+    console.log('Opening workflow settings:', workflowName);
+    toast({
+      title: "Paramètres workflow",
+      description: `Paramètres pour ${workflowName}`,
+    });
+  };
 
   const juridicalSources = [
     { name: "Légifrance", url: "www.legifrance.gouv.fr", description: "Droit français", status: "Actif", type: "Externe" },
@@ -96,7 +203,7 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                 onChange={(e) => setSourcesFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleAddSource}>
               <Plus className="w-4 h-4 mr-2" />
               Ajouter une Source
             </Button>
@@ -120,10 +227,10 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditSource(source.name)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleOpenExternalSource(source.name, source.url)}>
                         <ExternalLink className="w-4 h-4" />
                       </Button>
                     </div>
@@ -145,7 +252,7 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                 onChange={(e) => setDatabasesFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleConfigureDatabase}>
               <Plus className="w-4 h-4 mr-2" />
               Configurer Base
             </Button>
@@ -169,10 +276,10 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleDatabaseSettings(db.name)}>
                         <Settings className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleDatabaseAccess(db.name)}>
                         <Database className="w-4 h-4" />
                       </Button>
                     </div>
@@ -194,7 +301,7 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                 onChange={(e) => setTemplatesFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleAddTemplate}>
               <Plus className="w-4 h-4 mr-2" />
               Nouveau Modèle
             </Button>
@@ -217,10 +324,10 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditTemplate(template.name)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleDeleteTemplate(template.name)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -242,7 +349,7 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                 onChange={(e) => setModelsFilter(e.target.value)}
               />
             </div>
-            <Button className="ml-4">
+            <Button className="ml-4" onClick={handleCreateWorkflow}>
               <Plus className="w-4 h-4 mr-2" />
               Créer Workflow
             </Button>
@@ -265,10 +372,10 @@ export function ComplementaryResourcesSection({ language = "fr" }: Complementary
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditWorkflow(model.name)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleWorkflowSettings(model.name)}>
                         <Settings className="w-4 h-4" />
                       </Button>
                     </div>

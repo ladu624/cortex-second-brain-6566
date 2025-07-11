@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Smartphone, 
   Download, 
@@ -22,6 +23,36 @@ interface MobileAppSectionProps {
 }
 
 export function MobileAppSection({ language = "fr" }: MobileAppSectionProps) {
+  const { toast } = useToast();
+
+  // Handlers pour les actions rapides
+  const handleDownloadApp = () => {
+    console.log('Downloading mobile app');
+    toast({
+      title: "Téléchargement de l'application",
+      description: "Lancement du téléchargement de l'application mobile",
+    });
+    // TODO: Logique de téléchargement de l'app
+  };
+
+  const handleSyncData = () => {
+    console.log('Syncing mobile data');
+    toast({
+      title: "Synchronisation des données",
+      description: "Synchronisation en cours avec l'application mobile...",
+    });
+    // TODO: Logique de synchronisation
+  };
+
+  const handleAppSettings = () => {
+    console.log('Opening app settings');
+    toast({
+      title: "Paramètres de l'application",
+      description: "Ouverture des paramètres de l'application mobile",
+    });
+    // TODO: Ouvrir modal des paramètres
+  };
+
   const texts = {
     fr: {
       title: "Version Mobile Native",
@@ -202,17 +233,17 @@ export function MobileAppSection({ language = "fr" }: MobileAppSectionProps) {
         <CardContent>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button className="h-20 flex flex-col gap-2" variant="outline">
+            <Button className="h-20 flex flex-col gap-2" variant="outline" onClick={handleDownloadApp}>
               <Download className="w-6 h-6" />
               <span>{t.downloadApp}</span>
             </Button>
             
-            <Button className="h-20 flex flex-col gap-2" variant="outline">
+            <Button className="h-20 flex flex-col gap-2" variant="outline" onClick={handleSyncData}>
               <RefreshCw className="w-6 h-6" />
               <span>{t.syncData}</span>
             </Button>
             
-            <Button className="h-20 flex flex-col gap-2" variant="outline">
+            <Button className="h-20 flex flex-col gap-2" variant="outline" onClick={handleAppSettings}>
               <Settings className="w-6 h-6" />
               <span>{t.appSettings}</span>
             </Button>
